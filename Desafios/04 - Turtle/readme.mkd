@@ -1,0 +1,4 @@
+Bibliotecas usadas
+-> Turtle, Tkinter
+
+Para execução é necessário que ambos os arquivos estejão na mesma pasta e as bibliotecas citadas a cima, estejam instaladas.
