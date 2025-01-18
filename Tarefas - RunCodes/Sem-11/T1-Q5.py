@@ -9,11 +9,11 @@
 
 def calcular(vDivida, vSalario, nAno, nMes, txJuros, txSalario):
     while vDivida < vSalario:
-        vDivida += vDivida*txJuros
+        vDivida += vDivida*(txJuros/100)
         nMes += 1
 
         if nMes == 3:
-            vSalario += vSalario*txSalario
+            vSalario += vSalario*(txSalario/100)
         elif nMes == 12:
             nMes = 0
             nAno += 1
