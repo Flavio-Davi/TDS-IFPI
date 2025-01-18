@@ -38,7 +38,7 @@ class cardapio():
 
     def showMenu(self):
         print(self.cores["cyan"]+" CARDÁPIO ".center(50, "#"))
-        print(self.cores["yellow"]+f"\n{"CÓDIGO":<10} {'ITENS':<20} {'PREÇO (R$)':>10}")
+        print(self.cores["yellow"]+f"\n{'CÓDIGO':<10} {'ITENS':<20} {'PREÇO (R$)':>10}")
         for key, value in self.opc.items():
             print(f"{key:<10} {value[0]:<20} {value[1]:>10}")
 
