@@ -1,0 +1,37 @@
+div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+}
+
+#esqUp {
+    background-color: red;
+    width: 250px;
+    top: 0;
+    left: 0;
+}
+
+#esqDow {
+    background-color: green;
+    width: 250px;
+    bottom: 0;
+    left: 0;
+}
+
+#dirUp {
+    background-color: yellow;
+    width: 250px;
+    top: 0;
+    right: 0;
+}
+
+#dirDow {
+    background-color: blue;
+    bottom: 0;
+    right: 0;
+    width: 250px;
+}
