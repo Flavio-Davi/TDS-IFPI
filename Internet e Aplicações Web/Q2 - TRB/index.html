@@ -1,0 +1,63 @@
+<!--Criar uma página HTML com a aparência abaixo, com o uso de uma tabela alinhada ao centro, com
+espaçamento de 2px entre as células e espaçamento interno de 2px em cada célula e seguindo as
+estilizações abaixo: 
+• Sobre a tabela ainda, sem borda e com largura de 600px;
+• Uso de três tons da cor azul: #0D5188 (azul escuro), #66C5E3 (azul médio) e #C7E7F3 (azul claro);
+• Uso de fonte da família “Arial”, com tamanho 12px;
+• Título da tabela: cor branca;
+• Nomes das cidades: cor de código #0D5188 (azul escuro);
+• Cor de fundo das células de posição: prata;
+• Com exceção das posições e dos quantitativos populacionais, os demais textos estão em formato
+negrito;
+• As colunas referentes às posições correspondem, em termos de largura, a 10% da largura da
+tabela, cada uma;
+• As colunas referentes aos quantitativos populacionais correspondem, em termos de largura, a 15%
+da largura da tabela, cada uma. -->
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Questão 2</title>
+</head>
+<body>
+    <div id="Tabela">
+        <table border="0">
+            <thead>
+                <tr>
+                    <th align="center" colspan="6" color="#0D5188">Cidade mais populosa da Bahia<br>(Estimativa de 2009 do isntituto Brasileiro de Geografia e Estatística)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="subtitulo">
+                    <td>Posição</td>
+                    <td>Cidade</td>
+                    <td class="popTitle">Pop.</td>
+                    <td>Posição</td>
+                    <td>Cidade</td>
+                    <td class="popTitle">Pop.</td>
+                </tr>
+                <tr>
+                    <td class="position">1</td>
+                    <td class="nameCity azul">Salvador</td>
+                    <td class="pop">2 998 056</td>
+                    <td class="position">3</td>
+                    <td class="nameCity azul">Vitória da conquista</td>
+                    <td class="pop">318 901</td>
+                </tr> 
+                <tr>
+                    <td class="position">2</td>
+                    <td class="nameCity azul">Feira de Santana</td>
+                    <td class="pop">591 707</td>
+                    <td class="position">4</td>
+                    <td class="nameCity azul">Juazeiro</td>
+                    <td class="pop">243 896</td>
+                </tr> 
+            </tbody>
+            </table>
+    </div>
+</body>
+</html>

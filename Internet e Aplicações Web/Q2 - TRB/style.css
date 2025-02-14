@@ -1,0 +1,46 @@
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#Tabela th {
+    background-color: #0D5188;
+    color: #ffff;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 600px; 
+}
+
+#Tabela td.position {
+    background-color: #bbbdbe;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#Tabela tr.subtitulo {
+    background-color: #66C5E3;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.popTitle {
+    background-color: #66C5E3;
+    font-weight: bold;    
+}
+
+#Tabela td.pop {
+    background-color: #C7E7F3;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#Tabela td.nameCity {
+    color: #0D5188;
+    font-weight: bold;
+}
+
+.azul {
+    background-color: #C7E7F3;
+    font-weight: bold;
+}
