@@ -1,4 +1,4 @@
-# Atividades do Curso "Técnico em Desenvolvimento de Sistemas" - IFPI
+# Atividades do Curso Técnico em Desenvolvimento de Sistemas - IFPI
 
 Esta pasta contém as atividades desenvolvidas durante o curso de **Técnico em Desenvolvimento de Sistemas** do **Instituto Federal do Piauí (IFPI)**, ministrado pelo **Professor Rogério Batista**. Aqui, você encontrará projetos, exercícios e exemplos práticos que foram trabalhados ao longo do curso.
 
