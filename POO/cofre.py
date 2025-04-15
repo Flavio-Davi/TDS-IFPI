@@ -5,7 +5,7 @@ class Cofre_Eletronico:
     def __init__(self):
         self.estado = False
         self.tentativas = 3
-        self.listClientes = []
+        self.listClientes = {}
         self.cor = {"red": "\033[1;31m", "yellow": "\033[1;32m", "green": "\033[1;33m"}
 
 
@@ -13,19 +13,17 @@ class Cofre_Eletronico:
         print(" CRIAR USUARIO E SENHA ".center(50, "#"))
 
         user = input("Digite seu nome de usuario: ")
-        self.listClientes.append(user)
 
         while True:
-            senha = input("Digite sua senha: ")
+            self.listClientes[f"{user}"] = input("Digite sua senha: ")
             system("clear")
             confirm_senha = input("Confirme sua senha: ")
 
-            if senha != confirm_senha:
+            if self.listClientes[f"{user}"] != confirm_senha:
                 continue
             else:
                 time = 3
                 while time > 0:
-                    self.listClientes.append(senha)
                     system("clear")
                     print(self.cor["green"] + "\n>>> Usuario e senha criado com sucesso. Você será recirecionado para o menu em instantes.")
                     print(f"{time}")
@@ -49,6 +47,7 @@ class Cofre_Eletronico:
                 if senha != confirm_senha:
                     continue
                 else:
+                    self.listClientes[f"{cliente}"] = senha
                     print(">>> Senha alterada com sucesso. Pressione enter para voltar.")
                     input() 
                     break
@@ -69,11 +68,13 @@ class Cofre_Eletronico:
             print(f"TENTATIVAS [{userTentativas}/3]\n")
             usuario = input("Usuario: ")
             senha = input("Senha: ") 
+            senha_correta = self.listClientes[f"{usuario}"]
+
 
             if userTentativas == 3:
                 input("Redefina sua senha, pressione enter para voltar ao menu principal")
                 break 
-            elif usuario not in self.listClientes and senha != self.listClientes:
+            elif senha != senha_correta:
                 userTentativas += 1
                 print(self.cor["red"] + ">>> SENHA INCORRETA")
                 sleep(0.5)
