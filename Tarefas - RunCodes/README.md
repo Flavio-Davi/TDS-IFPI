@@ -37,4 +37,4 @@ Para começar a explorar este repositório, siga os seguintes passos:
 
 1. **Clone este repositório**:
    ```bash
-   git clone https://github.com/SEU-USUARIO/nome-do-repositorio.git
+   git clone https://github.com/Flavio-Davi/TDS-IFPI.git
