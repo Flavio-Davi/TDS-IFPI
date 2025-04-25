@@ -1,10 +1,12 @@
 import pandas as pd
 from sqlalchemy import create_engine
 
-
 class Data:
     def __init__(self):
-        self.cnx = create_engine("mysql+pymysql://root:test123@localhost:3306/bd_test")
+        try:
+            self.cnx = create_engine("mysql+pymysql://root:Test123@localhost:3306/test")
+        except Exception as e:
+            print(f"ERROR: {e}")
 
 
     def get_data(self):
@@ -20,4 +22,4 @@ class Data:
 
 if __name__ == '__main__':
     i = Data()
-    print(i.save_data())
+    print(i.get_data())
