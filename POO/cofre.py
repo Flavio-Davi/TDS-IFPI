@@ -50,18 +50,15 @@ class Cofre_Eletronico:
                 senha = input("Digite sua nova senha: ")
                 confirm_senha = input("Confirme a senha: ")
 
+                for c in range(senha):
+                    if senha[c] not in senhaValida or senha[c] not in senhaValida1:
+                        print(self.cor["red"]+">>> Adicione pelo menos um numero e um caractere em sua senha.")
+                        sleep(1)
+                        break
                 if senha != confirm_senha:
                     print(self.cor["red"]+">>> Senhas diferente.")
                     sleep(1)
-                    continue
-                elif not any(c in senhaValida for c in senha):
-                    print(self.cor["red"]+">>> Adicione pelo menos um caracter especial em sua senha.")
-                    sleep(1)
-                    continue
-                elif not any(c in senhaValida for c in senha):
-                    print(self.cor["red"]+">>> Adicione pelo menos um numero em sua senha.")
-                    sleep(1)
-                    continue
+                    continue                            
                 else:
                     self.listClientes[f"{cliente}"] = senha
                     print(">>> Senha alterada com sucesso. Pressione enter para voltar.")
