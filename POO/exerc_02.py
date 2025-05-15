@@ -3,8 +3,15 @@
 # obrigatórios e opcionais, o uso de métodos para exibir e atualizar as informações do veículo, e
 # incluir funcionalidades como cálculo de depreciação, verificação de validade de placae venda
 # com atualização do proprietário.
+from os import system
+from os import name
 import string
+from re import fullmatch
 from datetime import datetime
+
+def limpar():
+    return system("cls") if name=="nt" else system("clear")
+
 
 class Veiculo:
     def __init__(self, chassi, marca: str, modelo: str, ano: int, cor: str):
@@ -15,7 +22,7 @@ class Veiculo:
         self.cor = cor
         self.placa = "SEM PLACA"
         self.proprietario = "Não especificado"
-        self.quilometragem = 0
+        self.quilometragem = 0.0
         self.valor = 1000.0
     
 
@@ -39,51 +46,47 @@ VALOR.......................R${self.valor}
 
 
     def validar_placa(self, new_placa):
-        modelo = ["ACB-1234", "ABC-1A23"]
-        letras = string.ascii_letters
-        numeros = string.digits
+        valido = r"^[A-Z]{3}-[A-Z0-9]{4}$"
 
-        valida = False
-
-        # Verifica 1° parte
-        for c in range(len(new_placa)):
-            if new_placa[c] in letras and c<3: 
-                valida = True
-            else:
-                valida = False
-        
-        # Verifica os numeros
-        for c in range(len(new_placa[3::])):
-            if new_placa[c] in letras and c<8: 
-                valida = True
-            else:
-                valida = False
-
-        return valida
+        return bool(fullmatch(valido, new_placa))
 
 
     def calcular_depriacao(self):
         ano_atual = datetime.now().year
-        tempo = ano_atual-self.ano
-        
-        # M = C*(1 + i)t
-        depreciacao = self.valor*(1+5)**tempo
-        
-        return depreciacao
+        tempo = ano_atual - self.ano
+        taxa = 0.05
+        valor_final = self.valor * (1 - taxa) ** tempo
+        valor_minimo = self.valor * 0.10
+
+        if valor_final < valor_minimo:
+            valor_final = valor_minimo
         
 
-    def atualizar_quilometragem(self):
-        pass
+    def atualizar_quilometragem(self, new_km: float):
+        if new_km > self.quilometragem:
+            self.quilometragem += new_km
+            return f"QUILOMETRAGEM ATUALIZA\n>>> {self.quilometragem}km"
+        else:
+            return f"Quilometragem inserida inferior ao valor atual de {self.quilometragem}km, insira um valor válido, maior que a quilometragem atual para atualização."
 
 
-    def atualizar_propietario(self):
-        pass
+    def atualizar_propietario(self, new_property):
+        self.proprietario = new_property
+        return f"Propietário atualizado para Sr.(a) {self.proprietario}"
 
     
-    def vender(self):
-        pass
+    def vender(self, value, name_property):
+        valor_mercado = self.valor * (1 - 0.05) ** (datetime.now().year - self.ano)
+        valor_minimo = self.valor * 0.10
+
+        if valor_mercado < valor_minimo:
+             valor_mercado = valor_minimo
+ 
+        self.proprietario = name_property
+
+        
+        return "Veículo vendido acima do valor de mercado." if value > valor_mercado else "Veículo vendido abaixo do valor de mercado."
 
 
 if __name__ == '__main__':
     v = Veiculo(1, "Toyota", "Corola", 2001, "Amarelo")
-    print(v.calcular_depriacao())
