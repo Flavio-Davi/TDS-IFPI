@@ -17,7 +17,7 @@ class Boleto:
 
 
     def menu(self):
-        valido = ["1", "2", "3", "4"]
+        valido = ["1", "2", "3", "4", "5"]
         while True:
             limpar()
             user = input(self.cor["amarelo"]+"""
@@ -78,11 +78,11 @@ if __name__ == '__main__':
             sleep(2)
         if iniciar == "2":
             i.consulta()
-        if iniciar == "3":
+        elif iniciar == "3":
             pass
-        if iniciar == "4":
+        elif iniciar == "4":
             pass
-        if iniciar == "5":
+        else:
             limpar()
             print(">>> Programa encerrado.")
             break
