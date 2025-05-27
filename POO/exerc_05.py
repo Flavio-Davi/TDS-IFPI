@@ -4,4 +4,4 @@ class PassEstacionamento:
 
 
 def __name__ == '__main__':
-    PassEsstacionamento()
+    PassEstacionamento()
