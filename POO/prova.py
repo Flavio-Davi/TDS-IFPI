@@ -1,3 +1,5 @@
+# Ludimila ANdrade Maciel & Flávio Davi da Silva Alves
+
 import datetime
 from os import system, name
 from time import sleep
