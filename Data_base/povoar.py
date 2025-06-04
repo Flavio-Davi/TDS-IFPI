@@ -2,30 +2,30 @@ import pandas as pd
 from sqlalchemy import engine
 
 class Povoar:
-    def __init__(self):
+    def __init__(self, user: str, password: str, host: str, db_name: str):
         try:
-            self._cnx = "mysql+pymysql://root:mysql123@127.0.0.1/PUBLICACOES"
-        except:
-            print(">> Erro ao conectar com o banco de dados.")    
-
+            self._engine = engine.create_engine(f"mysql+pymysql://{user}:{password}@{host}/{db_name}")
+            print("Conexão estabelecida com sucesso.")
+        except Exception as e:
+            raise e
+    
 
     @property
-    def cnx(self):
-        return self._cnx
+    def engine(self):
+        return self._engine
 
 
-    def send(self, data: pd.DataFrame):
+    def send(self, data: pd.DataFrame, name_table: str):
         try:
-            data.to_sql("NACIONALIDADE", self.cnx, if_exists="append", index=False)
-            return print("Sucesso ao inserir os dados.")
+            data.to_sql(f"{name_table}", self.engine, if_exists="append", index=False)
+            print("Dados inserido com sucesso no banco de dados")
         except Exception as e:
-            return print(f"ERROR: {e}")
+            raise e
 
 
 def main():
-    i = Povoar()
-    data = pd.read_excel("./data.xlsx", dtype={"ID": int, "NC": str})
-    i.send(data)
+    data = r".\data_nacionalidade.csv"
+    i  = Povoar()
 
 
 if __name__ == '__main__':
