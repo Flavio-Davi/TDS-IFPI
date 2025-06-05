@@ -7,7 +7,7 @@ SELECT * FROM livro WHERE titulo LIKE '%Banco%';
 -- Livros cujos títulos iniciam com a palavra ‘Banco’.
 SELECT * FROM livro WHERE titulo LIKE 'Banco%';
 -- Livros cujos títulos terminam com a palavra ‘Dados’.
-SELECT * FROM livro WHERE TITULO LIKE '%Dados';
+SELECT * FROM livro WHERE titulo LIKE '%Dados';
 -- Livros cujos títulos possuem a expressão ‘Banco de Dados’ ou ‘Bancos de Dados’.
 SELECT * FROM livro WHERE titulo LIKE 'Banco de Dados' OR titulo LIKE 'Bancos de Dados';
 -- Livros que foram lançados há mais de 5 anos.
