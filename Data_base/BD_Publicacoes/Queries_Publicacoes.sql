@@ -1,7 +1,7 @@
 -- Livros que possuam preços superiores a R$ 50,00.
 SELECT * FROM livro WHERE preco>50.0;
 -- Livros que possuam preços entre R$ 100,00 e R$ 200,00.
-SELECT * FROM LIVRO WHERE preco>100 AND preco<200;
+SELECT * FROM livro WHERE preco>100 AND preco<200;
 -- Livros cujos títulos possuam a palavra ‘Banco’.
 SELECT * FROM livro WHERE titulo LIKE '%Banco%';
 -- Livros cujos títulos iniciam com a palavra ‘Banco’.
