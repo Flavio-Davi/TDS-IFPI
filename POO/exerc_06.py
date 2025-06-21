@@ -1,5 +1,5 @@
 class Pessoa:
-    def __init__(self, nome, idade, peso, altura, sexo, mãe=None, estado="vivo", est_civil="solteiro"):
+    def __init__(self, nome, idade, peso, altura, sexo, mae=None, estado="vivo", est_civil="solteiro"):
         self.__nome = nome
         self.__idade = idade
         self.__peso = peso
@@ -7,13 +7,12 @@ class Pessoa:
         self.__sexo = sexo
         self.__estado = estado
         self.__est_civil = est_civil
-        self.__mãe = mãe
+        self.__mae = mae
         self.__pai = None
-        self.__mãe_adotiva = None
+        self.__mae_adotiva = None
         self.__pai_adotivo = None
         self.__conjuge = None
 
-    # Propriedades (getters)
     @property
     def nome(self):
         return self.__nome
@@ -35,16 +34,16 @@ class Pessoa:
         return self.__conjuge
 
     @property
-    def mãe_adotiva(self):
-        return self.__mãe_adotiva
+    def mae_adotiva(self):
+        return self.__mae_adotiva
 
-    # Setter para nome (exemplo)
+   
     @nome.setter
     def nome(self, novo_nome):
         if isinstance(novo_nome, str):
             self.__nome = novo_nome
 
-    # Método casar
+
     def casar(self, parceiro):
         if self.__estado != "vivo":
             print(f"{self.__nome} está morto(a) e não pode casar.")
@@ -65,7 +64,7 @@ class Pessoa:
         parceiro.__est_civil = "casado"
         print(f"{self.__nome} e {parceiro.nome} agora estão casados.")
 
-    # Método morrer
+  
     def morrer(self):
         if self.__estado == "morto":
             print(f"{self.__nome} já está morto(a).")
@@ -78,7 +77,7 @@ class Pessoa:
             self.__est_civil = "falecido"
             print(f"{self.__nome} faleceu.")
 
-    # Método divorciar
+   
     def divorciar(self):
         if self.__conjuge:
             ex = self.__conjuge
@@ -90,18 +89,18 @@ class Pessoa:
         else:
             print(f"{self.__nome} não está casado(a).")
 
-    # Método adoção
+ 
     def adocao(self, mae):
-        if self.__mãe is None and self.__mãe_adotiva is None and self.__pai is None and self.__pai_adotivo is None:
+        if self.__mae is None and self.__mae_adotiva is None and self.__pai is None and self.__pai_adotivo is None:
             if mae.idade >= 18:
-                self.__mãe_adotiva = mae
+                self.__mae_adotiva = mae
                 print(f"{mae.nome} adotou {self.__nome}.")
             else:
                 print(f"{mae.nome} não tem idade suficiente para adotar.")
         else:
             print(f"{self.__nome} já tem responsáveis e não pode ser adotado.")
 
-    # Método str
+   
     def __str__(self):
         return (
             f"Nome: {self.__nome}\n"
@@ -111,7 +110,7 @@ class Pessoa:
             f"Sexo: {self.__sexo}\n"
             f"Estado: {self.__estado}\n"
             f"Estado Civil: {self.__est_civil}\n"
-            f"Mãe biológica: {self.__mãe.nome if self.__mãe else 'Desconhecida'}\n"
-            f"Mãe adotiva: {self.__mãe_adotiva.nome if self.__mãe_adotiva else 'Nenhuma'}\n"
+            f"Mãe biológica: {self.__mae.nome if self.__mae else 'Desconhecida'}\n"
+            f"Mãe adotiva: {self.__mae_adotiva.nome if self.__mae_adotiva else 'Nenhuma'}\n"
             f"Cônjuge: {self.__conjuge.nome if self.__conjuge else 'Nenhum'}"
         )
