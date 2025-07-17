@@ -1,13 +1,13 @@
-# Apresentação: Conceitos de POO no Código de Gerenciamento de Partições
+# Conceitos de POO no Código de Gerenciamento de Partições
 
-## Slide 1: Introdução
+## Introdução
 - **Objetivo**: Analisar os conceitos de POO utilizados no código de um sistema de gerenciamento de partições e arquivos.
 - **Código Base**: Um sistema com classes para arquivos, sistemas operacionais (Windows e Linux), partições e gerenciamento de partições.
 - **Conceitos Explorados**: Classes, Encapsulamento, Herança, Polimorfismo e Abstração.
 
 ---
 
-## Slide 2: Classes
+## Classes
 - **Definição**: Classes são blueprints que definem atributos e métodos de objetos, organizando a lógica do programa.
 - **Exemplo no Código**:
   ```python
@@ -37,7 +37,7 @@
 
 ---
 
-## Slide 3: Encapsulamento
+## Encapsulamento
 - **Definição**: Restringe o acesso direto aos atributos de um objeto, usando métodos ou convenções (como `_` para atributos protegidos) para controlar a manipulação de dados.
 - **Exemplo no Código**:
   ```python
@@ -59,7 +59,7 @@
 
 ---
 
-## Slide 4: Herança
+## Herança
 - **Definição**: Permite que uma classe derivada herde atributos e métodos de uma classe base, promovendo reutilização de código.
 - **Exemplo no Código**:
   ```python
@@ -82,7 +82,7 @@
 
 ---
 
-## Slide 5: Polimorfismo
+## Polimorfismo
 - **Definição**: Permite que objetos de diferentes classes implementem o mesmo método de formas distintas, possibilitando comportamentos variados.
 - **Exemplo no Código**:
   ```python
@@ -105,7 +105,7 @@
 
 ---
 
-## Slide 6: Abstração
+## Abstração
 - **Definição**: Esconde detalhes de implementação, expondo apenas interfaces essenciais, frequentemente com classes e métodos abstratos.
 - **Exemplo no Código**:
   ```python
@@ -129,14 +129,3 @@
           pass
   ```
 - **Explicação**: A classe `SistemaOperacional` é abstrata (herda de `ABC`) e define métodos abstratos (`_inicializar_gerenciador`, `listar_arquivos`, `criar_pasta`, `adicionar_arquivo`), forçando `Windows` e `Linux` a implementá-los.
-
----
-
-## Slide 7: Conclusão
-- **Resumo**:
-  - **Classes**: `Arquivo`, `SistemaOperacional`, `Particao` e `GerenciadorDeParticoes` estruturam o sistema.
-  - **Encapsulamento**: Atributos como `_inicializar_gerenciador` e métodos como `associar_sistema_operacional` controlam o acesso.
-  - **Herança**: `Windows` e `Linux` herdam de `SistemaOperacional`, reutilizando código.
-  - **Polimorfismo**: Métodos como `listar_arquivos` variam entre `Windows` e `Linux`.
-  - **Abstração**: `SistemaOperacional` define uma interface abstrata para sistemas operacionais.
-- **Benefícios**: Organização, reutilização de código e flexibilidade para diferentes sistemas operacionais.
