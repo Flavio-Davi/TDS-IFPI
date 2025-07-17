@@ -1,8 +1,7 @@
 # Conceitos de POO no Código de Gerenciamento de Partições
 
 ## Introdução
-- **Objetivo**: Analisar os conceitos de POO utilizados no código de um sistema de gerenciamento de partições e arquivos.
-- **Código Base**: Um sistema com classes para arquivos, sistemas operacionais (Windows e Linux), partições e gerenciamento de partições.
+- **Código**: Um sistema com classes para arquivos, sistemas operacionais (Windows e Linux), partições e gerenciamento de partições.
 - **Conceitos Explorados**: Classes, Encapsulamento, Herança, Polimorfismo e Abstração.
 
 ---
