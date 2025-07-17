@@ -7,7 +7,7 @@
 ---
 
 ## Classes
-- **Definição**: Classes são blueprints que definem atributos e métodos de objetos, organizando a lógica do programa.
+- **Definição**: Definir os atributos (dados) e métodos (funções) que os objetos criados a partir dessa classe terão.
 - **Exemplo no Código**:
   ```python
   class Arquivo:
@@ -105,7 +105,7 @@
 ---
 
 ## Abstração
-- **Definição**: Esconde detalhes de implementação, expondo apenas interfaces essenciais, frequentemente com classes e métodos abstratos.
+- **Definição**: Esconde detalhes de implementação, expondo apenas interfaces essenciais.
 - **Exemplo no Código**:
   ```python
   from abc import ABC, abstractmethod
