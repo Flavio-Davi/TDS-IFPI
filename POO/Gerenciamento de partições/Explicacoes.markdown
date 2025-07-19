@@ -3,7 +3,7 @@
 ## Introdução
 - **Código**: Um sistema com classes para arquivos, sistemas operacionais (Windows e Linux), partições e gerenciamento de partições.
 - **Conceitos Explorados**: Classes, Encapsulamento, Herança, Polimorfismo e Abstração.
-
+-  **Integrantes:** Italo Bruno, Flávio Davi, Marcos Renam (Grupo 3 - Trabalho 1) 
 ---
 
 ## Classes
