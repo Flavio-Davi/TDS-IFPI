@@ -123,6 +123,49 @@ class revisao_funcoes:
         return max_a, max_b
 
 
+    def atv11(self, n: int):
+        divisiveis = []
+        for c in range(1, n+1):
+            if n%c==0:
+                divisiveis.append(c)
+        return divisiveis
+
+
+    def atv12(self, n: int):
+        s = 0
+        for c in range(1, n+1):
+            s += c
+        return s
+
+
+    def atv13(self, n: int):
+        s = 1+(1/2)+(1/3)+(1/4)+(1/5)+(1/n) 
+        return s
+
+
+    def atv14(self, n: int):
+        def fat(i):
+            f = 1
+            for c in range(i, 0, -1):
+                f*=c
+            return f
+        s = (1+(1/1))+(1/fat(2))+(1/fat(3))+(1/fat(n)) 
+        return s
+
+
+    def atv15(self, n: int):
+        s = []
+        c = 1
+        while True:    
+            numerador = (c**2)+1
+            denominador = c+3
+            s.append(float(f'{numerador/denominador:.2f}'))
+            if c==n:
+                break
+            c+=1
+        return sum(s)
+
+
 def main():
     i = revisao_funcoes()
     while True:
@@ -189,6 +232,34 @@ def main():
             print(i.atv10(a_list, b_list))
             input("\nPressione enter para voltar.")
 
+        elif user == "11":
+          n = int(input("Digite um número: "))
+          print(f"O número {n} é divisível por:\n>> {i.atv11(n)}")
+          input("\nPressione enter para voltar.")
 
+        elif user == "12":
+            n = int(input("Digite um número: "))
+            print(f"A somatório do número {n} é:\n>> {i.atv12(n)}")
+            input("\nPressione enter para voltar.")
+
+        elif user == "13":
+            n = int(input("Digite um número: "))
+            print(f"O número {n} na expressão S = 1 + 1⁄2 + 1/3 + 1⁄4 + 1/5 + 1/N:\n>> {i.atv13(n):.2f}")
+            input("\nPressione enter para voltar.")
+        
+        elif user == "14":
+            n = int(input("Digite um número: "))
+            print(f"O número {n} na expressão S = 1 + 1/1! + 1⁄2! + 1/3! + 1 /N!:\n>> {i.atv14(n):.2f}")
+            input("\nPressione enter para voltar.")
+
+        elif user == "15":
+            n = int(input("Digite um número: "))
+            print(f"O número {n} na expressão S = 2/4 + 5/5 + 10/6 + 17/7 + 26/8 + ... +(t^2+1)/(t+3):\n>> {i.atv15(n):.2f}")
+            input("\nPressione enter para voltar.")
+
+        else:
+            break
+
+        
 if __name__ == '__main__':
     main()
