@@ -52,7 +52,7 @@ class revisao_funcoes:
         if opc == 1:
             return 3.14 * raio
         elif opc == 2:
-            return 3.14 * 2 * raio
+            return 3.14 * 2 ** raio
         else:
             raise("ERROR: 1 para ÁREA e 2 para PERÍMETRO.")
 
@@ -70,10 +70,10 @@ class revisao_funcoes:
             return "Você está de recuperação, pois não atingiu a média mínima de 6.0"
 
 
-    def atv5(self, altura: float, sexo: str):
-        if sexo.upper() not in [1, 2]:
+    def atv5(self, altura: float, sexo: int):
+        if sexo not in [1, 2]:
             raise "ERROR: Sexo inserido inválido, digite 1 para feminino e 2 para masculino."
-        elif sexo == 'f':
+        elif sexo == 1:
             return (62.1 * altura)-44.7
         else:
             return (72.7 * altura)-58
@@ -209,7 +209,7 @@ def main():
 
         elif user == "5":
             a = float(input("Altura: "))
-            s = input("Sexo: ")
+            s = int(input("Sexo[1-F, 2-M]: "))
             print(f"Seu peso ideal é de {i.atv5(a, s):.2f}")
             input("\nPressione enter para voltar.")
 
