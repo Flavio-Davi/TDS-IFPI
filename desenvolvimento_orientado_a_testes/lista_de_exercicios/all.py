@@ -128,7 +128,7 @@ class revisao_funcoes:
         for c in range(1, n+1):
             if n%c==0:
                 divisiveis.append(c)
-        return divisiveis.count()
+        return divisiveis
 
 
     def atv12(self, n: int):
