@@ -52,7 +52,7 @@ class revisao_funcoes:
         if opc == 1:
             return 3.14 * raio
         elif opc == 2:
-            return 3.4 * 2 * raio
+            return 3.14 * 2 * raio
         else:
             raise("ERROR: 1 para ÁREA e 2 para PERÍMETRO.")
 
@@ -71,8 +71,8 @@ class revisao_funcoes:
 
 
     def atv5(self, altura: float, sexo: str):
-        if sexo.upper() not in ['F', 'M']:
-            raise "ERROR: Sexo inserido inválido, digite M para masculino e F para feminino."
+        if sexo.upper() not in [1, 2]:
+            raise "ERROR: Sexo inserido inválido, digite 1 para feminino e 2 para masculino."
         elif sexo == 'f':
             return (62.1 * altura)-44.7
         else:
@@ -108,7 +108,7 @@ class revisao_funcoes:
 
     def atv9(self, n1: int, n2: int):
         tot = list(range(n1, n2+1, 1))
-        sum(tot)
+        return sum(tot)
 
 
     def atv10(self, a: list, b: list):
@@ -128,7 +128,7 @@ class revisao_funcoes:
         for c in range(1, n+1):
             if n%c==0:
                 divisiveis.append(c)
-        return divisiveis
+        return divisiveis.count()
 
 
     def atv12(self, n: int):
@@ -139,8 +139,15 @@ class revisao_funcoes:
 
 
     def atv13(self, n: int):
-        s = 1+(1/2)+(1/3)+(1/4)+(1/5)+(1/n) 
-        return s
+        s = []
+        c = 1
+        while True:
+            denominador = c
+            s.append(float(f'{1/denominador:.2f}'))
+            if c==n:
+                break
+            c+=1
+        return sum(s)
 
 
     def atv14(self, n: int):
@@ -149,8 +156,15 @@ class revisao_funcoes:
             for c in range(i, 0, -1):
                 f*=c
             return f
-        s = (1+(1/1))+(1/fat(2))+(1/fat(3))+(1/fat(n)) 
-        return s
+        s = []
+        c = 1
+        while True:
+            denominador = c
+            s.append(1/fat(denominador))
+            if c==n:
+                break
+            c+=1
+        return sum(s)
 
 
     def atv15(self, n: int):
@@ -260,6 +274,6 @@ def main():
         else:
             break
 
-        
+
 if __name__ == '__main__':
     main()
