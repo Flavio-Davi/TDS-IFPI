@@ -1,8 +1,15 @@
-from os import name
+from os import name, system
+
+def limpar():
+    if name == 'nt':
+        return system("cls")
+    else:
+        return system("clear")
+
 
 class revisao_funcoes:
     def __init__(self):
-        valido = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
+        self.valido = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
 
 
     def home(self):
@@ -30,26 +37,157 @@ class revisao_funcoes:
 [ 16 ] - Encerrar
                          
 → """)
+            limpar()
             if menu in self.valido:
+                limpar()
                 break
         return menu
 
 
-    def atv1(x):
+    def atv1(self, x):
         return False if x%2 else True
 
+
+    def atv2(self, raio: str, opc=1):
+        if opc == 1:
+            return 3.14 * raio
+        elif opc == 2:
+            return 3.4 * 2 * raio
+        else:
+            raise("ERROR: 1 para ÁREA e 2 para PERÍMETRO.")
+
+
+    def atv3(self, f: float):
+        c = ((f-32)/9)*5
+        return c
+
+
+    def atv4(self, n1: float, n2: float):
+        m = (n1+n2)/2
+        if m >= 6:
+            return "PARABÉNS! Você foi aprovado!"
+        else:
+            return "Você está de recuperação, pois não atingiu a média mínima de 6.0"
+
+
+    def atv5(self, altura: float, sexo: str):
+        if sexo.upper() not in ['F', 'M']:
+            raise "ERROR: Sexo inserido inválido, digite M para masculino e F para feminino."
+        elif sexo == 'f':
+            return (62.1 * altura)-44.7
+        else:
+            return (72.7 * altura)-58
+
+
+    def atv6(self, l: int, m: float):
+        p = l*m
+        if l not in [3,4,5]:
+            raise "ERRO: Apenas os valores 3, 4 ou 5 são aceitos para número de lados."
+        elif l == 3:
+            return f"TRIÂNGULO\nPerímetro: {p}"
+        else:
+            return f"QUADRADO\nPerímetro: {p}"if l == 4 else f"PENTÁGONO\nPerímetro: {p}"
+
+
+    def atv7(self, n: int):
+        fat = n
+        if n == 1:
+            return n
+        else:
+            for c in range(n-1, 1, -1):
+                fat *= c
+            return fat
+
+
+    def atv8(self, caracter: str):
+        if caracter in ['S', 'N']:
+            return caracter
+        else:
+            return "Caractere inválido. Digite novamente"
+
+
+    def atv9(self, n1: int, n2: int):
+        tot = list(range(n1, n2+1, 1))
+        sum(tot)
+
+
+    def atv10(self, a: list, b: list):
+        max_a = 0
+        max_b = 0
+        for c in a:
+            if c>max_a:
+                max_a = c
+        for c in b:
+            if c>max_b:
+                max_b = c
+        return max_a, max_b
 
 
 def main():
     i = revisao_funcoes()
     while True:
+        limpar()
         user = i.home()
-        if user == "16":
-            print()
-    if menu in valido:
-        if menu == '1':
+        if user == "1":
+            x = int(input("Digite um número inteiro: "))
+            print(f"O número digitado é {'PAR' if i.atv1(x) else 'IMPAR'}.")
+            input("\nPressione enter para voltar.")
+
+        elif user == "2":
+            raio = float(input("Raio: "))
+            opc = int(input("Calcular:\n[ 1 ] ÁREA\n[ 2 ] PERÍMETRO\n>> "))
+            print(f"{'ÁREA: 'if opc==1 else 'PERÍMETRO: '}{i.atv2(raio, opc)}")
+            input("\nPressione enter para voltar.")
+
+        elif user == "3":
+            f = float(input("Temperatura °F: "))
+            print(f"A temperatura {f}°F convertida para Celsius é de {i.atv3(f):.2f}°C")
+            input("\nPressione enter para voltar.")                  
+        
+        elif user == "4":
+            n1 = float(input("Digite a 1° nota: "))
+            n2 = float(input("Digite a 2° nota: "))
+            print(i.atv4(n1, n2))
+            input("\nPressione enter para voltar.")
+
+        elif user == "5":
+            a = float(input("Altura: "))
+            s = input("Sexo: ")
+            print(f"Seu peso ideal é de {i.atv5(a, s):.2f}")
+            input("\nPressione enter para voltar.")
+
+        elif user == "6":
+            l = int(input("Número de lados de um polígono regular [3, 4 ou 5]: "))
+            m = float(input("Medida do lado: "))
+            print(i.atv6(l, m))
+            input("\nPressione enter para voltar.")
+
+        elif user == "7":
             n = int(input("Digite um número inteiro: "))
-            print(f"\nO número digitado é {'par' if atv1(n) else 'impar'}")
+            print(i.atv7(n))
+            input("\nPressione enter para voltar.")
+
+        elif user == "8":
+            c = "S"
+            while c == "S":
+                num = input("Número: ")
+                print(f"Cubo: {int(num)*int(num)*int(num)}")
+                c = input("Continuar?[S/N]").upper().strip()
+                print(i.atv8(c))
+
+        elif user == "9":
+            n1 = int(input("1° número: "))
+            n2 = int(input("2° número: "))
+            print(f"A soma do intervalo {n1} à {n2} é {i.atv9(n1, n2)}")
+            input("\nPressione enter para voltar.")
+
+        elif user == "10":
+            list_a = input("Digite a PRIMEIRA sequência de números separada por espaço\n>>> ").strip()
+            list_b = input("\nDigite a SEGUNDA sequência de números separada por espaço\n>>> ").strip()
+            a_list = [int(num) for num in list_a.split()]
+            b_list = [int(num) for num in list_b.split()]
+            print(i.atv10(a_list, b_list))
+            input("\nPressione enter para voltar.")
 
 
 if __name__ == '__main__':
