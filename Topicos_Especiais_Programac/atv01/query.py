@@ -2,10 +2,6 @@ from datetime import date
 from db_config import Conexao
 
 class Querie:
-    def __init__(self):
-        self.cnx = Conexao()
-
-
     def all_data(self):
         QUERY = "SELECT * FROM professor;"
         return QUERY
@@ -21,4 +17,5 @@ VALUES
     
 
 if __name__ == '__main__':
+
     Querie()
