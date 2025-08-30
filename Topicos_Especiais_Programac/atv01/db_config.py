@@ -32,21 +32,25 @@ class Conexao:
                 print(f"ERROR: {e}")
             
 
-    def execute_query(self, query):
-        self._cursor.execute(query)
-        result = self._cursor.fetchall()
-        self._cursor.close()
-        self._cnx.close()
-        
+    def execute_query_read(self, query, param=None):
+        try:
+            self._cursor.execute(query, param)
+            result = self._cursor.fetchall()
+            self._cursor.close()
+            self._cnx.close()
+        except mysql.connector.Error as e:
+            print(f"ERROR: {e}")
         return result
     
-    
-    def execute_long_query(self, query, value):
-        self._cursor.execute(query, value)
-        self._cnx.commit()
-        self._cursor.close()
-        self._cnx.close()
         
+    def execute_query_update(self, query, param):
+        try:
+            self._cursor.execute(query, param)
+            self._cnx.commit()
+            self._cursor.close()
+            self._cnx.close()
+        except mysql.connector.Error as e:
+            return f"ERROR: {e}"
         return True
 
 
