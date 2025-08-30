@@ -3,21 +3,20 @@ from datetime import date
 from db_config import Conexao
 
 cnx = Conexao()
+q = Querie()
 
-#dt = date(1983, 1, 28)
-#q = Querie().insert_data()
-#up = cnx.execute_long_query(q, ('Sandy', 'Junior', 'SALO2025SP', dt, 'sandyjr@gmail.com'))
+# dados = cnx.execute_query_update(q.delete_teacher(), ('13',))
+# print(dados)
 
-cnx_data = Conexao()
-dados = cnx_data.execute_query(Querie().all_data())
+dados = cnx.execute_query_read(q.read_all_teacher())
 
-for dado in dados:
-    print({
-        "ID": f"{dado[0]}",
-        "PRIMEIRO_NOME": f"{dado[1]}",
-        "SOBRE_NOME": f"{dado[2]}",
-        "MATRICULA": f"{dado[3]}",
-        "DATA_NASCIMENTO": f"{date.strftime(dado[4], "%d/%m/%Y")}",
-        "E-MAIL": f"{dado[5]}"
-    })
-  
+for v in dados:
+    print(f"""id: {v[0]}
+PrimeroNome: {v[1]}
+SobreNome: {v[2]}
+Matrícula: {v[3]}
+Data de Nascimento: {date.strftime(v[4], '%d-%m-%Y')}
+E-mail: {v[5]}
+""")
+    
+# 'ctr k c' comentar e 'ctr k u' descomentar
