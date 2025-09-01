@@ -1,228 +1,189 @@
-# gui.py
-import customtkinter as ctk
-from tkinter import ttk, messagebox
-from db_config import Conexao
 from query import Querie
-from tkcalendar import DateEntry
+from datetime import date
+from db_config import Conexao
+from time import sleep
+import os
 
 
-class TeacherGUI(ctk.CTk):
+class Escola:
     def __init__(self):
-        super().__init__()
-        self.title("Sistema de Professores - CRUD Completo")
-        self.geometry("1050x650")
-        ctk.set_appearance_mode("System")  # opções: "Light", "Dark", "System"
-        ctk.set_default_color_theme("blue")  # opções: "blue", "green", "dark-blue"
-
-        self.queries = Querie()
-
-        # === Frame de entradas ===
-        entry_frame = ctk.CTkFrame(self, corner_radius=10)
-        entry_frame.pack(fill="x", padx=15, pady=10)
-
-        labels = [
-            "Primeiro Nome", "Sobrenome", "Matrícula",
-            "Nascimento (YYYY-MM-DD)", "Email", "ID (Update/Delete)"
-        ]
-        self.entries = {}
-
-        for i, label in enumerate(labels):
-            lbl = ctk.CTkLabel(entry_frame, text=label, font=("Arial", 12))
-            lbl.grid(row=0, column=i, padx=5, pady=5)
-            if "Nascimento" in label:
-                entry = DateEntry(entry_frame, width=15, date_pattern="yyyy-mm-dd")
-            else:
-                entry = ctk.CTkEntry(entry_frame, width=150)
-            entry.grid(row=1, column=i, padx=5, pady=5)
-            self.entries[label] = entry
-
-        # === Frame de seleção da operação ===
-        action_frame = ctk.CTkFrame(self, corner_radius=10)
-        action_frame.pack(fill="x", padx=15, pady=5)
-
-        ctk.CTkLabel(action_frame, text="Escolha a operação:", font=("Arial", 12)).grid(row=0, column=0, padx=5)
-
-        self.action_var = ctk.StringVar(value="Criar Professor")
-        self.combo = ctk.CTkOptionMenu(
-            action_frame, variable=self.action_var, width=250,
-            values=[
-                "Criar Professor",
-                "Exibir Todos",
-                "Buscar por Matrícula",
-                "Atualizar Completo",
-                "Atualizar Primeiro Nome",
-                "Atualizar Sobrenome",
-                "Atualizar Matrícula",
-                "Atualizar Nascimento",
-                "Atualizar Email",
-                "Deletar Professor"
-            ]
-        )
-        self.combo.grid(row=0, column=1, padx=10)
-
-        ctk.CTkButton(action_frame, text="Executar", command=self.run_action).grid(row=0, column=2, padx=15)
-
-        # === Frame da tabela ===
-        table_frame = ctk.CTkFrame(self, corner_radius=10)
-        table_frame.pack(fill="both", expand=True, padx=15, pady=10)
-
-        style = ttk.Style()
-        style.configure("Treeview.Heading", font=("Arial", 11, "bold"))
-        style.configure("Treeview", font=("Arial", 10), rowheight=28)
-
-        self.tree = ttk.Treeview(
-            table_frame,
-            columns=("ID", "Primeiro Nome", "Sobrenome", "Matrícula", "Nascimento", "Email"),
-            show="headings", height=15
-        )
-        for col in self.tree["columns"]:
-            self.tree.heading(col, text=col)
-            self.tree.column(col, width=160, anchor="center")
-
-        scrollbar_y = ttk.Scrollbar(table_frame, orient="vertical", command=self.tree.yview)
-        self.tree.configure(yscroll=scrollbar_y.set)
-        scrollbar_y.pack(side="right", fill="y")
-        self.tree.pack(fill="both", expand=True)
-
-    # === Função para executar a ação escolhida ===
-    def run_action(self):
-        action = self.action_var.get()
-        try:
-            if action == "Criar Professor":
-                conn = Conexao()
-                conn.execute_query_update(
-                    self.queries.create_teacher(),
-                    (
-                        self.entries["Primeiro Nome"].get(),
-                        self.entries["Sobrenome"].get(),
-                        self.entries["Matrícula"].get(),
-                        self.entries["Nascimento (YYYY-MM-DD)"].get(),
-                        self.entries["Email"].get()
-                    )
-                )
-                messagebox.showinfo("Sucesso", "Professor inserido com sucesso.")
-                self.read_all_teachers()
-
-            elif action == "Exibir Todos":
-                self.read_all_teachers()
-
-            elif action == "Buscar por Matrícula":
-                conn = Conexao()
-                rows = conn.execute_query_read(
-                    self.queries.read_teacher(),
-                    (self.entries["Matrícula"].get(),)
-                )
-                if not rows:
-                    messagebox.showinfo("Resultado", "Nenhum professor encontrado com essa matrícula.")
-                self.refresh_tree(rows)
-
-            elif action == "Atualizar Completo":
-                conn = Conexao()
-                conn.execute_query_update(
-                    self.queries.update_teacher(),
-                    (
-                        self.entries["Primeiro Nome"].get(),
-                        self.entries["Sobrenome"].get(),
-                        self.entries["Matrícula"].get(),
-                        self.entries["Nascimento (YYYY-MM-DD)"].get(),
-                        self.entries["Email"].get(),
-                        self.entries["ID (Update/Delete)"].get()
-                    )
-                )
-                messagebox.showinfo("Sucesso", "Professor atualizado.")
-                self.read_all_teachers()
-
-            elif action == "Atualizar Primeiro Nome":
-                conn = Conexao()
-                conn.execute_query_update(
-                    self.queries.update_teacher_firstname(),
-                    (
-                        self.entries["Primeiro Nome"].get(),
-                        self.entries["ID (Update/Delete)"].get()
-                    )
-                )
-                messagebox.showinfo("Sucesso", "Primeiro nome atualizado.")
-                self.read_all_teachers()
-
-            elif action == "Atualizar Sobrenome":
-                conn = Conexao()
-                conn.execute_query_update(
-                    self.queries.update_teacher_lastname(),
-                    (
-                        self.entries["Sobrenome"].get(),
-                        self.entries["ID (Update/Delete)"].get()
-                    )
-                )
-                messagebox.showinfo("Sucesso", "Sobrenome atualizado.")
-                self.read_all_teachers()
-
-            elif action == "Atualizar Matrícula":
-                conn = Conexao()
-                conn.execute_query_update(
-                    self.queries.update_teacher_registration(),
-                    (
-                        self.entries["Matrícula"].get(),
-                        self.entries["ID (Update/Delete)"].get()
-                    )
-                )
-                messagebox.showinfo("Sucesso", "Matrícula atualizada.")
-                self.read_all_teachers()
-
-            elif action == "Atualizar Nascimento":
-                conn = Conexao()
-                conn.execute_query_update(
-                    self.queries.update_teacher_birthday(),
-                    (
-                        self.entries["Nascimento (YYYY-MM-DD)"].get(),
-                        self.entries["ID (Update/Delete)"].get()
-                    )
-                )
-                messagebox.showinfo("Sucesso", "Data de nascimento atualizada.")
-                self.read_all_teachers()
-
-            elif action == "Atualizar Email":
-                conn = Conexao()
-                conn.execute_query_update(
-                    self.queries.update_teacher_email(),
-                    (
-                        self.entries["Email"].get(),
-                        self.entries["ID (Update/Delete)"].get()
-                    )
-                )
-                messagebox.showinfo("Sucesso", "Email atualizado.")
-                self.read_all_teachers()
-
-            elif action == "Deletar Professor":
-                conn = Conexao()
-                conn.execute_query_update(
-                    self.queries.delete_teacher(),
-                    (self.entries["ID (Update/Delete)"].get(),)
-                )
-                messagebox.showinfo("Sucesso", "Professor deletado.")
-                self.read_all_teachers()
-
-        except Exception as e:
-            messagebox.showerror("Erro", str(e))
-
-    # === Função para exibir todos ===
-    def read_all_teachers(self):
-        try:
-            conn = Conexao()
-            rows = conn.execute_query_read(self.queries.read_all_teacher())
-            if not rows:
-                messagebox.showinfo("Resultado", "Nenhum professor encontrado no banco de dados.")
-            self.refresh_tree(rows)
-        except Exception as e:
-            messagebox.showerror("Erro", str(e))
-
-    # === Função auxiliar para atualizar a tabela ===
-    def refresh_tree(self, rows):
-        for i in self.tree.get_children():
-            self.tree.delete(i)
-        for row in rows:
-            self.tree.insert("", "end", values=row)
+        self.cnx = Conexao()
+        self.q = Querie()
 
 
-if __name__ == "__main__":
-    app = TeacherGUI()
-    app.mainloop()
+    def criar_professor(self, p_nome: str, s_nome: str, matricula: str, data_nasc: date, email: str):
+        return self.cnx.execute_query_update(self.q.create_teacher(), (p_nome, s_nome, matricula, data_nasc, email))
+
+
+    def visualizar_professores(self):
+        return self.cnx.execute_query_read(self.q.read_all_teacher())
+            
+    
+    def visualizar_professor(self, matricula: str):        
+        return self.cnx.execute_query_read(self.q.read_teacher(), (matricula,))
+
+
+    def atualizar_professor(self, id=None, p_nome=None, s_nome=None, matricula=None, data_nascimento=None, email=None):
+        if id!=None and p_nome!=None and s_nome!=None and matricula!=None and data_nascimento!=None and email!=None:
+            self.cnx.execute_query_update(self.q.update_teacher(),  p_nome,
+                                                                    s_nome,
+                                                                    matricula,
+                                                                    data_nascimento,
+                                                                    email,
+                                                                    id)
+            return "Dados atualizados com sucesso."
+            
+        elif id==None and p_nome!=None and s_nome==None and matricula==None and data_nascimento==None and email==None:
+            self.cnx.execute_query_update(self.q.update_teacher_firstname, (p_nome,))
+            return "Primeiro nome do professor atualizado com sucesso."
+
+        elif id==None and p_nome==None and s_nome!=None and matricula==None and data_nascimento==None and email==None:
+            self.cnx.execute_query_update(self.q.update_teacher_lastname(), (s_nome,))
+            return "Sobrenome do professor atualizado com sucesso."
+        
+        elif id==None and p_nome==None and s_nome==None and matricula!=None and data_nascimento==None and email==None:
+            self.cnx.execute_query_update(self.q.update_teacher_registration(), (matricula,))
+            return "Matrícula do professor atualizada com sucesso."
+        
+        elif id==None and p_nome==None and s_nome==None and matricula==None and data_nascimento!=None and email==None:
+            self.cnx.execute_query_update(self.q.update_teacher_birthday(), (data_nascimento,))
+            return "Data de nascimento do professor atualizado com sucesso."
+
+        elif id==None and p_nome==None and s_nome==None and matricula==None and data_nascimento==None and email!=None:
+                self.cnx.execute_query_update(self.q.update_teacher_birthday(), (email,))
+                return "E-mail do professor atualizado com sucesso."
+
+
+    def ativar_inativar_professor(self, id=str, valor=bool):
+        return self.cnx.execute_query_update(self.q.active_inactive(), (valor, id))
+
+
+    def delete_professor(self, id: str):
+        self.cnx.execute_query_update(self.q.delete_teacher(), (id,))
+
+
+    def gerar_matricula(self):
+        matriculas = self.cnx.execute_query_read(self.q.view_registration())
+        ultima_matricula = int(matriculas[len(matriculas)-1][0][-1])
+
+        if ultima_matricula<10:
+            return "2025MP00" + str(ultima_matricula)
+        elif ultima_matricula>10:
+            return "2025MP0" + str(ultima_matricula)
+        else:
+            return "2025MP" + str(ultima_matricula)
+
+
+    def encerrar_conexao(self):
+        return self.cnx.close_connection()
+        
+    
+
+class main():
+    def __init__(self):
+        self.e = Escola()
+        
+        while True:
+            hm = self.home()
+
+            if hm == "1":
+                self.limpar_tela()
+                matricula = self.e.gerar_matricula()
+                p_nome = input("Primeiro nome: ")
+                s_nome = input("Sobrenome: ")
+                print("Data de nascimento")
+                dia = int(input("\tDia: "))
+                mes = int(input("\tMês: "))
+                ano = int(input("\tAno: "))
+                data_nasc = date(ano, mes, dia)
+                email = input("E-mail: ")
+                
+                self.e.criar_professor(p_nome, s_nome, matricula, data_nasc, email)
+                print(">>> Professor criado com sucesso.")
+                sleep(1)
+
+            elif hm == "2":
+                self.limpar_tela()
+                dados = self.e.visualizar_professores()
+                for dado in dados:
+                    print(f"""Nome: {dado[1]}
+Sobrenome: {dado[2]}
+Matricula: {dado[3]}
+Data de Nascimento: {date.strftime(dado[4], "%d/%m/%Y")}
+E-mail: {dado[5]}
+Ativo: {'ATIVO' if int(dado[6]) else 'INATIVO'}
+    """)
+                input(">> Pressione enter para voltar.")
+
+            elif hm == "3":
+                self.limpar_tela()
+                matricula = input("Digite a matrícula do professor: ")
+                professor = self.e.visualizar_professor(matricula)
+
+                for dado in professor:
+                   print(f"""Nome: {dado[1]}
+Sobrenome: {dado[2]}
+Matricula: {dado[3]}
+Data de Nascimento: {date.strftime(dado[4], "%d/%m/%Y")}
+E-mail: {dado[5]}
+Status: {'ATIVO' if int(dado[6]) else 'INATIVO'}
+    """)   
+                input(">> Pressione enter para voltar.")
+
+            elif hm == "4":
+                self.limpar_tela()
+                id_professor = input("Digite o ID do professor: ")
+                valor = input("Digite 1 para ativar e 0 para inativar o professor: ")
+                self.e.ativar_inativar_professor(id_professor, valor)
+
+                if valor == "0":
+                    print(">>> Professor inativado com sucesso")
+                    sleep(1)
+                else:
+                    print(">>> Professor ativado com sucesso")
+                    sleep(1)
+
+            elif hm == "5":
+                self.limpar_tela()
+                id_professor = input("Digite o id do professor que deseja excluir do banco\n>>> ")
+                p_nome = Conexao().execute_query_read(Querie().view_firstname(), (id_professor,))
+                excluir = input(f"Você está preste a excluir o professor {p_nome[0][0]}, você confirma?\n[ 1 ] - Sim\n[ 2 ] - Não\n>> ")
+                if excluir == "1":
+                    self.e.delete_professor(id_professor)
+                    print(f"Professor de id {id_professor} excluido com sucesso")
+                    sleep(1)
+                else:
+                    print(">> Operação abortada com sucesso.")
+                    sleep(1)
+
+            elif hm == "6":
+                self.limpar_tela()
+                self.e.encerrar_conexao()
+                print("Programa encerrado.")
+                break
+
+
+    def home(self):
+        while True:
+            self.limpar_tela()
+            user = input("""############ CRUD professor ############
+[ 1 ] - Criar um novo professor
+[ 2 ] - Visualizar TODOS os professores
+[ 3 ] - Visualizar UM professor
+[ 4 ] - Inativar/Ativar novo professor
+[ 5 ] - Excluir um professor do banco
+[ 6 ] - Encerrar
+    -> """)
+            if user in ["1","2","3","4","5", "6"]:
+                break
+        return user
+
+    
+    def limpar_tela(self):
+        if os.name == "nt":
+            return os.system("cls")
+        else:
+            return os.system("clear")
+
+if __name__ == '__main__':
+    main()
