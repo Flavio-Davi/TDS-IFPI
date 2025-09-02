@@ -1,43 +1,36 @@
-class Querie:    
-    def create_teacher(self) -> str:
-        """Insira cinco argumentos na execução da consulta:
-        1. Primeiro nome -> type: str()
-        2. Sobrenome -> type: str()
-        3. Matrícula -> type: str()
-        4. Data de nascimento -> type: date()
-        5. E-mail -> type: str()
-        """
+from db_config import Conexao
+from modelo_professor import Professor
+from datetime import date
 
-        QUERY = """INSERT INTO 
+class DAO_Professor:    
+    def __init__(self):
+        self.cnx = Conexao()
+
+    def create_teacher(self, professor: Professor):
+        query = """INSERT INTO 
     professor (primeiro_nome, sobrenome, matricula, data_nascimento, email)
 VALUES
     (%s, %s, %s, %s, %s);"""
+        data = (professor.p_nome, professor.s_nome, professor.matricula, professor.data_nascimento, professor.email)
 
-        return QUERY
-    
-    def read_all_teacher(self) -> str:
+        self.cnx.execute_query_update(query, data)
+        return ">> Professor criado com sucesso."
+
+    def read_all_teacher(self):
         """Retorna os dados de todos os professores."""
 
-        QUERY = """SELECT
-    *
-FROM
-    professor"""
+        query = "SELECT * FROM professor"
+        return self.cnx.execute_query_read(query)
 
-        return QUERY
-
-    def read_teacher(self) -> str:
+    def read_teacher(self, matricula_professor):
         """Insira a matrícula do professor que deseja consultar as informações na execução da consulta:
         1. matrícula -> type: str()
         """
 
-        QUERY = """SELECT
-    *
-FROM
-    professor
-WHERE
-    matricula = %s"""
+        query = "SELECT * FROM professor WHERE matricula = %s"
+        data = matricula_professor
 
-        return QUERY
+        return self.cnx.execute_query_read(query, (data,))
 
     def update_teacher(self) -> str:
         """Insira os dados do professor que deseja atualizar na execução da consulta:
@@ -175,4 +168,6 @@ WHERE
 
 
 if __name__ == '__main__':
-    Querie()
+    d = DAO_Professor()
+    p = Professor("Daniele", "Carmen", "2025MP018", date(2004, 6, 21), "danicar@gmail.com")
+    print(d.read_teacher("2025MP018"))
