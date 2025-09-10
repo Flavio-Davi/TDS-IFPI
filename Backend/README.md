@@ -3,7 +3,8 @@
 Bem-vindo à pasta da disciplina de **Backend** do curso **Técnico em Desenvolvimento de Sistemas**!
 
 ## 👨‍🏫 Professor
-**Rogério Silva**
+**Rogério Silva**  
+[![GitHub: rogeriosilva-ifpi](https://img.shields.io/badge/GitHub-Profile-181717?style=flat&logo=github&logoColor=white)](https://github.com/rogeriosilva-ifpi)
 
 ## 💻 Tecnologias Utilizadas
 Durante a disciplina, estamos trabalhando com as seguintes tecnologias e ferramentas:
@@ -14,7 +15,7 @@ Durante a disciplina, estamos trabalhando com as seguintes tecnologias e ferrame
 - **ORMs** (ex: SQLAlchemy)  
 - **APIs RESTful**  
 - **JSON e Requisições HTTP**  
-- **CRUD** com banco de dados
+- **CRUD** com banco de dados  
 - E outras ferramentas e boas práticas do desenvolvimento backend moderno.
 
 ## 🧠 Objetivos da Disciplina
