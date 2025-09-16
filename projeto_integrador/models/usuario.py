@@ -1,10 +1,10 @@
 from database.conexao import Conexao
 
 class Usuario:
-    def __init__(self, nome: str, email: str, num_cel: int):
+    def __init__(self, nome: str, email: str, contato: int, id: int | None=None):
         self.nome = nome
         self.email = email
-        self.num_cel = num_cel
+        self.contato = contato
 
 
 class DAO_Usuario:
@@ -13,7 +13,7 @@ class DAO_Usuario:
 
     def create(self, usuario: Usuario):
         QUERY = """INSERT INTO usuario (nome_completo, email, numero_cel) VALUES (%s, %s, %s);"""
-        self.__cnx.inserir_alterar_dados(QUERY, (usuario.nome, usuario.email, usuario.num_cel))
+        self.__cnx.inserir_alterar_dados(QUERY, (usuario.nome, usuario.email, usuario.contato))
 
         return ">>> Dados inseridos com sucesso."
 
@@ -23,7 +23,7 @@ class DAO_Usuario:
             dados = self.__cnx.visualizar_dados(QUERY, id)
             return dados
         else:
-            QUERY = """SELECT nome_completo, email, numero_cel FROM usuario"""
+            QUERY = """SELECT * FROM usuario"""
             dados = self.__cnx.visualizar_dados(QUERY)
             return dados
 
