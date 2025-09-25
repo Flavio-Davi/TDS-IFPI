@@ -1,38 +1,47 @@
 import mysql.connector
-from mysql.connector import errorcode
 from dotenv import load_dotenv
 from os import getenv
 
-load_dotenv(r'.\settings_db\config.env')
-
-USER = getenv("USER")
-PASSWORD = getenv("PASSWORD")
-HOST = getenv("HOST")
-DB_NAME = getenv("DB_NAME")
-PORT = getenv("PORT")
-
-class Conexao:
+class Db_config:
     def __init__(self):
+        load_dotenv('./config.env')
+        self.__user = getenv('USER')
+        self.__password = getenv('PASSWORD')
+        self.__host = getenv('HOST')
+        self.__database = getenv('DATABASE')
+
+    @property
+    def user(self):
+        return self.__user
+    @property
+    def password(self):
+        return self.__password
+    @property
+    def host(self):
+        return self.__host
+    @property
+    def database(self):
+        return self.__database
+
+
+
+class Conexao(Db_config):
+    def __init__(self):
+        super().__init__()
         try:
             self._config = {
-                'user': USER, 'password': PASSWORD,
-                'host': HOST,
-                'database': DB_NAME,
-                'raise_on_warnings': True
+                'user': self.user, 'password': self.password,
+                'host': self.host,
+                'database': self.database
             }
             self._cnx = mysql.connector.connect(**self._config)
             self._cursor = self._cnx.cursor()
 
         except mysql.connector.Error as e:
-            if e.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                raise "ERROR: Acesso ao banco negado. Verifique suas credenciais."
-            elif e.errno == errorcode.ER_BAD_DB_ERROR:
-                raise f"ERROR: Banco de dados *{DB_NAME}* inexistente."
-            else:
                 raise Exception(e)
 
 
-    def execute_query_read(self, query, param=None):
+    def execute_query_read(self, query: str, param: tuple |None=None):
         try:
             self._cursor.execute(query, param)
             result = self._cursor.fetchall()
@@ -41,7 +50,7 @@ class Conexao:
         return result
 
 
-    def execute_query_update(self, query, param):
+    def execute_query_update(self, query: str, param: tuple):
         try:
             self._cursor.execute(query, param)
             self._cnx.commit()
@@ -59,3 +68,4 @@ class Conexao:
 
 if __name__ == '__main__':
     Conexao()
+    
