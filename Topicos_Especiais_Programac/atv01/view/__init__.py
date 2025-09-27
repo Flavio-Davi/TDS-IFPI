@@ -1,0 +1,1 @@
+# Simples: a camada de interação com o usuário. Ela apenas faz a exibição dos dados.

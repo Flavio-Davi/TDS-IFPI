@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Debug de Dados da API</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+        }
+        pre {
+            background-color: #2b2b2b;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Dados Brutos da API</h1>
+    <pre id="api-data">Carregando dados...</pre>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dataContainer = document.getElementById('api-data');
+            
+            fetch('http://127.0.0.1:8000/alunos/')
+                .then(response => {
+                    // Se a resposta não for OK, lança um erro para o bloco catch
+                    if (!response.ok) {
+                        throw new Error(`Erro de rede: ${response.status} ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Formata o JSON para ser mais fácil de ler
+                    dataContainer.textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    dataContainer.textContent = 'Erro ao carregar os dados. Verifique a conexão e o CORS.';
+                    console.error('Erro:', error);
+                });
+        });
+    </script>
+
+</body>
+</html>
