@@ -19,9 +19,9 @@ class Conexao(metadata):
     def __init__(self):
         super().__init__()
         try:
-            self.__cnx = connect(user = 'root', password='mysql123',
-                        host='127.0.0.1',
-                        database='startup')
+            self.__cnx = connect(user = self._USER, password = self._PASSWORD,
+                        host = self._HOST,
+                        database = self._DATABASE)
             self.__cursor = self.__cnx.cursor()
         except Error as e:
             raise(e)
