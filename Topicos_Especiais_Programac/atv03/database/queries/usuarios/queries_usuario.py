@@ -3,7 +3,7 @@ class Queries_usuario:
         QUERY = """INSERT INTO
                         usuarios(nome_completo, email, data_nascimento)
                     VALUES
-                        (%s, %s, %s, %s);"""
+                        (%s, %s, %s);"""
         return QUERY
 
     def read(self, param: bool=False):
