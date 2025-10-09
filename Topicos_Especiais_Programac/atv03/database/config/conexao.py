@@ -19,9 +19,9 @@ class Conexao(metadata):
     def __init__(self):
         super().__init__()
         try:
-            self.__cnx = connect(user = self._USER, password = self._PASSWORD,
-                        host = self._HOST,
-                        database = self._DATABASE)
+            self.__cnx = connect(user = 'root', password='mysql123',
+                        host='127.0.0.1',
+                        database='startup')
             self.__cursor = self.__cnx.cursor()
         except Error as e:
             raise(e)
@@ -40,13 +40,13 @@ class Conexao(metadata):
         try:
             self.__cursor.execute(query, param)
             self.__cnx.commit()
-
+            
             new_id = self.__cursor.lastrowid
             return new_id if new_id !=0 else True
         except Exception as e:
             raise(e)
 
-
+    @staticmethod
     def close_connection(self):
         try:
             self.__cursor.close()

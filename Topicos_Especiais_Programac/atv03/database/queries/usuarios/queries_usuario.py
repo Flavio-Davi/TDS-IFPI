@@ -1,12 +1,14 @@
 class Queries_usuario:
-    def create(self):
+    @staticmethod
+    def create():
         QUERY = """INSERT INTO
                         usuarios(nome_completo, email, data_nascimento)
                     VALUES
                         (%s, %s, %s);"""
         return QUERY
 
-    def read(self, param: bool=False):
+    @staticmethod
+    def read(param: bool=False):
         if param:
             QUERY = """SELECT
                             *
@@ -21,7 +23,8 @@ class Queries_usuario:
                             usuarios;"""
         return QUERY
     
-    def update(self):
+    @staticmethod
+    def update():
         QUERY = """UPDATE
                         usuarios
                     SET
@@ -29,11 +32,11 @@ class Queries_usuario:
                     WHERE
                         id=%s;"""
         return QUERY
-        
-    def delete(self):
+    
+    @staticmethod
+    def delete():
         QUERY = """DELETE FROM
                         usuarios
                     WHERE
                         id=%s;"""
         return QUERY
-

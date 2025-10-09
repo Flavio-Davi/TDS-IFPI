@@ -18,6 +18,6 @@ class Usuario:
             'id': self.id,
             'nome': self.nome,
             'email': self.email,
-            'data de nascimento': self.data_nascimento
+            'data de nascimento': self.data_nascimento.strftime('%d/%m/%Y')
         }
         return str(data)

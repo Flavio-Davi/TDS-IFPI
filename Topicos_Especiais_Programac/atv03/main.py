@@ -1,8 +1,8 @@
 from models.model.model_usuario import Usuario
 from models.dao.dao_usuario import Dao_Usuario
 
-user = Usuario(nome="Vanessa", email="vanessa@gmail.com", data_nascimento="2001-07-11")
+user = Usuario(id=10 ,nome="Daniel", email="daniel2020@gmail.com", data_nascimento="2000-12-21")
 dao = Dao_Usuario()
 
-dao.create(user)
-print(dao.read())
+
+print(dao.update(user))
