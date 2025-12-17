@@ -5,9 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// =============================================================================
-// 0️⃣ GERENCIADOR DO BANCO DE DADOS (SQLite)
-// =============================================================================
+
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
   factory DatabaseHelper() => _instance;
@@ -57,6 +55,7 @@ class DatabaseHelper {
     return maps.isNotEmpty;
   }
 
+
   Future<int> updatePassword(String email, String newPassword) async {
     final db = await database;
     return await db.update(
@@ -68,38 +67,37 @@ class DatabaseHelper {
   }
 }
 
-// =============================================================================
-// MODELO DE DADOS DE CONTATO (COM ENDEREÇO)
-// =============================================================================
+
 class Contact {
   int id;
   String name;
   String email;
   String phone;
-  String address; // CAMPO NOVO
+  String address;
 
   Contact({
     required this.id, 
     required this.name, 
     required this.email, 
     required this.phone,
-    required this.address, // CAMPO NOVO
+    required this.address,
   });
 }
+
 
 class ContactRepository {
   static final List<Contact> _contacts = [
     Contact(
       id: 1, 
       name: 'João Silva', 
-      email: 'joao@exemplo.com', 
+      email: 'joao@test.com', 
       phone: '11987654321',
       address: 'Rua Alcides Freitas, 665, Matinha, Teresina-PI'
     ),
     Contact(
       id: 2, 
       name: 'Maria Souza', 
-      email: 'maria@exemplo.com', 
+      email: 'maria@test.com', 
       phone: '21998765432',
       address: 'Av. Frei Serafim, 1000, Centro, Teresina-PI'
     ),
@@ -125,9 +123,7 @@ class ContactRepository {
   }
 }
 
-// =============================================================================
-// DEFINIÇÃO DE ROTAS E MAIN
-// =============================================================================
+
 const String loginRoute = '/';
 const String homeRoute = '/home';
 const String contactsRoute = '/contacts';
@@ -138,6 +134,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized(); 
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -166,14 +163,13 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// =============================================================================
-// 1️⃣ TELA DE LOGIN (COM IMAGEM LOCAL)
-// =============================================================================
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
+
 
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
@@ -280,7 +276,6 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(32.0),
           child: Column(
             children: <Widget>[
-              // --- IMAGEM LOCAL AQUI ---
               Image.asset(
                 'assets/images/topo_ifpi.png',
                 height: 100,
@@ -308,9 +303,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-// =============================================================================
-// 2️⃣ TELA PRINCIPAL (COM IMAGEM LOCAL)
-// =============================================================================
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
   @override
@@ -324,7 +317,6 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              // --- IMAGEM LOCAL AQUI ---
               Center(
                 child: Image.asset(
                   'assets/images/topo_ifpi.png',
@@ -343,6 +335,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
 
 class _HomeButton extends StatelessWidget {
   final String text;
@@ -364,9 +357,7 @@ class _HomeButton extends StatelessWidget {
   }
 }
 
-// =============================================================================
-// 3️⃣ TELA DE MAPA (COM PINO VERMELHO)
-// =============================================================================
+
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
@@ -374,9 +365,10 @@ class MapScreen extends StatefulWidget {
   State<MapScreen> createState() => _MapScreenState();
 }
 
+
 class _MapScreenState extends State<MapScreen> {
   late GoogleMapController mapController;
-  Set<Marker> _markers = {}; // LISTA DE MARCADORES (PINOS)
+  Set<Marker> _markers = {};
   
   final LatLng _initialPosition = const LatLng(-14.235004, -51.92528);
   bool _isLoading = true;
@@ -417,7 +409,6 @@ class _MapScreenState extends State<MapScreen> {
 
     if(mounted) {
       setState(() {
-        // CRIA O PINO VERMELHO
         _markers.add(
           Marker(
             markerId: const MarkerId('current_location'),
@@ -460,7 +451,7 @@ class _MapScreenState extends State<MapScreen> {
               target: _initialPosition,
               zoom: 4,
             ),
-            markers: _markers, // EXIBE O PINO
+            markers: _markers,
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
           ),
@@ -474,14 +465,14 @@ class _MapScreenState extends State<MapScreen> {
   }
 }
 
-// =============================================================================
-// DEMAIS TELAS (Lista de Contatos COM ROTA e Formulário COM ENDEREÇO)
-// =============================================================================
+
 class ContactListScreen extends StatefulWidget {
   const ContactListScreen({super.key});
   @override
   State<ContactListScreen> createState() => _ContactListScreenState();
 }
+
+
 class _ContactListScreenState extends State<ContactListScreen> {
   void _refreshContacts() { setState(() {}); }
   
@@ -490,7 +481,6 @@ class _ContactListScreenState extends State<ContactListScreen> {
     _refreshContacts();
   }
 
-  // --- FUNÇÃO PARA ABRIR O GOOGLE MAPS ---
   Future<void> _openMapRoute(String address) async {
     final query = Uri.encodeComponent(address);
     final googleUrl = Uri.parse("https://www.google.com/maps/search/?api=1&query=$query");
@@ -531,7 +521,6 @@ class _ContactListScreenState extends State<ContactListScreen> {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                          // BOTÃO DE ROTA
                           IconButton(
                             icon: const Icon(Icons.directions, color: Colors.blue, size: 30),
                             onPressed: () => _openMapRoute(contact.address),
@@ -557,12 +546,14 @@ class ContactFormScreen extends StatefulWidget {
   @override
   State<ContactFormScreen> createState() => _ContactFormScreenState();
 }
+
+
 class _ContactFormScreenState extends State<ContactFormScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _addressController = TextEditingController(); // CAMPO ENDEREÇO
+  final _addressController = TextEditingController();
   Contact? _editingContact;
 
   @override
@@ -574,7 +565,7 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
       _nameController.text = contact.name;
       _emailController.text = contact.email;
       _phoneController.text = contact.phone;
-      _addressController.text = contact.address; // CARREGA ENDEREÇO
+      _addressController.text = contact.address;
     }
   }
 
@@ -585,7 +576,7 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
         name: _nameController.text, 
         email: _emailController.text, 
         phone: _phoneController.text,
-        address: _addressController.text // SALVA ENDEREÇO
+        address: _addressController.text
       );
 
       if (_editingContact == null) { ContactRepository.add(newContact); } else { ContactRepository.update(newContact); }
@@ -604,7 +595,6 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
           TextFormField(controller: _emailController, decoration: const InputDecoration(labelText: 'Email'), validator: (v) => v!.isEmpty ? 'Erro' : null),
           TextFormField(controller: _phoneController, decoration: const InputDecoration(labelText: 'Telefone'), validator: (v) => v!.isEmpty ? 'Erro' : null),
           const SizedBox(height: 10),
-          // CAMPO DE ENDEREÇO
           TextFormField(
             controller: _addressController, 
             decoration: const InputDecoration(labelText: 'Endereço', border: OutlineInputBorder()), 
